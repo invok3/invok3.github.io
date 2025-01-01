@@ -298,7 +298,7 @@ nav a.active {
 /* Updated Skills section styling */
 .skills-container {
     width: 100%;
-    max-width: 800px;
+    max-width: 600px;
     font-family: 'Courier New', monospace;
 }
 
@@ -337,7 +337,7 @@ nav a.active {
     padding: 12px;
     min-height: 200px;
     position: relative;
-    max-height: 400px;
+    max-height: 200px;
     overflow-y: auto;
     scrollbar-width: thin;
     scrollbar-color: var(--primary) rgba(0, 0, 0, 0.3);
