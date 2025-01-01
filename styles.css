@@ -475,8 +475,8 @@ nav a.active {
     border-color: #00ffff;
 }
 
-.contact-card.linkedin:hover {
-    border-color: #0077b5;
+.contact-card.whatsapp:hover {
+    border-color: #25D366;  /* WhatsApp brand color */
 }
 
 #contact.section {

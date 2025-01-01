@@ -18,14 +18,26 @@ const navLinks = document.querySelectorAll('nav a');
 
 // Function to update active nav link
 function updateActiveLink(index) {
+    if (index < 0 || index >= navLinks.length) return;  // Guard clause
     navLinks.forEach(link => link.classList.remove('active'));
     navLinks[index].classList.add('active');
 }
 
 window.addEventListener('scroll', () => {
-    // check if updateactive link is needed
-    if (currentSectionIndex !== Math.floor(window.scrollY / window.innerHeight)) {
-        currentSectionIndex = Math.floor(window.scrollY / window.innerHeight);
+    // Calculate which section is currently in view
+    const sections = document.querySelectorAll('.section');
+    let newIndex = 0;
+
+    sections.forEach((section, index) => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= window.innerHeight/2 && rect.bottom >= window.innerHeight/2) {
+            newIndex = index;
+        }
+    });
+
+    // Only update if the section has changed
+    if (currentSectionIndex !== newIndex) {
+        currentSectionIndex = newIndex;
         updateActiveLink(currentSectionIndex);
     }
 });
@@ -101,69 +113,6 @@ async function animateConsole() {
 // Start animation when the page loads
 document.addEventListener('DOMContentLoaded', () => {
     setTimeout(animateConsole, 1000); // 1 second delay before starting animation
-});
-
-// Skills animation
-function initializeSkillBars() {
-    const skillBars = document.querySelectorAll('.skill-bar');
-    
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const bar = entry.target;
-                const level = bar.dataset.level + '%';
-                bar.style.setProperty('--level', level);
-                bar.classList.add('animate');
-                observer.unobserve(bar);
-            }
-        });
-    }, { threshold: 0.5 });
-
-    skillBars.forEach(bar => observer.observe(bar));
-}
-
-// Initialize skill bars when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    initializeSkillBars();
-});
-
-// Skills web animation
-function initializeSkillsWeb() {
-    const masteryBars = document.querySelectorAll('.mastery-fill');
-    const skillNodes = document.querySelectorAll('.skill-node');
-    
-    // Animate mastery bars
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const bar = entry.target;
-                const level = bar.dataset.level + '%';
-                bar.style.width = level;
-                observer.unobserve(bar);
-            }
-        });
-    }, { threshold: 0.5 });
-
-    masteryBars.forEach(bar => observer.observe(bar));
-
-    // Create connections between skills
-    const connections = document.querySelector('.skill-connections');
-    skillNodes.forEach((node, i) => {
-        skillNodes.forEach((targetNode, j) => {
-            if (i < j) {
-                const connection = document.createElement('div');
-                connection.className = 'connection';
-                // Calculate positions and set connection styles
-                // This is a simplified version - you might want to add more complex positioning logic
-                connections.appendChild(connection);
-            }
-        });
-    });
-}
-
-// Initialize skills web when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    initializeSkillsWeb();
 });
 
 // Skill terminal functionality
@@ -325,50 +274,16 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeSkillTerminal();
 });
 
-// Contact section animation
-function initializeContactTerminal() {
-    const command = document.querySelector('.contact-line .command');
-    const methods = document.querySelectorAll('.contact-method');
-    
-    async function animateTerminal() {
-        // Type the command
-        await typeText(command, command.dataset.text);
-        
-        // Show contact methods one by one
-        for (let method of methods) {
-            method.style.opacity = '0';
-            method.style.transform = 'translateX(-20px)';
-            await new Promise(resolve => setTimeout(resolve, 100));
-            method.style.opacity = '1';
-            method.style.transform = 'translateX(0)';
-        }
-    }
-
-    // Start animation when section becomes visible
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                animateTerminal();
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.5 });
-
-    observer.observe(document.querySelector('#contact'));
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    initializeContactTerminal();
-});
-
 // Add interactive glow effect
-document.querySelectorAll('.contact-card').forEach(card => {
-    card.addEventListener('mousemove', e => {
-        const rect = card.getBoundingClientRect();
-        const x = ((e.clientX - rect.left) / card.clientWidth) * 100;
-        const y = ((e.clientY - rect.top) / card.clientHeight) * 100;
-        
-        card.style.setProperty('--mouse-x', `${x}%`);
-        card.style.setProperty('--mouse-y', `${y}%`);
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.contact-card').forEach(card => {
+        card.addEventListener('mousemove', e => {
+            const rect = card.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / card.clientWidth) * 100;
+            const y = ((e.clientY - rect.top) / card.clientHeight) * 100;
+            
+            card.style.setProperty('--mouse-x', `${x}%`);
+            card.style.setProperty('--mouse-y', `${y}%`);
+        });
     });
-}); 
+});
