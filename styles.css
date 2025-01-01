@@ -93,7 +93,7 @@ nav a.active::after {
     margin-bottom: 40px;
     background-color: transparent;
     border-radius: 8px;
-    height: 70vh;
+    height: 60vh;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
