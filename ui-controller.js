@@ -123,20 +123,20 @@ const skillData = {
 `Proficiency Level: Expert
 
 Key Competencies:
-• Native Android Development (Java/Kotlin)
-• Android SDK & Android Jetpack
-• MVVM Architecture
-• Custom Views & Animations
-• Background Processing & Services
-• Hardware Integration (Camera, Sensors)
-• Network Operations & REST APIs
-• SQLite & Room Database
+- Native Android Development (Java/Kotlin)
+- Android SDK & Android Jetpack
+- MVVM Architecture
+- Custom Views & Animations
+- Background Processing & Services
+- Hardware Integration (Camera, Sensors)
+- Network Operations & REST APIs
+- SQLite & Room Database
 
 Recent Projects:
-• PhantomDroid - Remote Access Tool
-• Custom Camera Applications
-• Real-time Communication Apps
-• Background Service Implementations`,
+- PhantomDroid - Remote Access Tool
+- Custom Camera Applications
+- Real-time Communication Apps
+- Background Service Implementations`,
     },
     flutter: {
         name: 'Flutter Development',
@@ -144,20 +144,20 @@ Recent Projects:
 `Proficiency Level: Advanced
 
 Key Competencies:
-• Cross-platform Development
-• Custom Widget Development
-• State Management (Provider, Bloc)
-• Platform Channels
-• Custom Animations
-• Firebase Integration
-• RESTful API Integration
-• Local Storage Solutions
+- Cross-platform Development
+- Custom Widget Development
+- State Management (Provider, Bloc)
+- Platform Channels
+- Custom Animations
+- Firebase Integration
+- RESTful API Integration
+- Local Storage Solutions
 
 Recent Projects:
-• Flutter Runner Game
-• Custom Flutter Plugins
-• Cross-platform Applications
-• UI Component Libraries`,
+- Flutter Runner Game
+- Custom Flutter Plugins
+- Cross-platform Applications
+- UI Component Libraries`,
     },
     java: {
         name: 'Java',
@@ -165,19 +165,19 @@ Recent Projects:
 `Proficiency Level: Expert
 
 Key Competencies:
-• Object-Oriented Programming
-• Design Patterns
-• Multithreading & Concurrency
-• Network Programming
-• File I/O & Streams
-• Collections Framework
-• JNI & Native Code Integration
+- Object-Oriented Programming
+- Design Patterns
+- Multithreading & Concurrency
+- Network Programming
+- File I/O & Streams
+- Collections Framework
+- JNI & Native Code Integration
 
 Applications:
-• Android Development
-• Desktop Applications
-• Server-side Development
-• System Programming`,
+- Android Development
+- Desktop Applications
+- Server-side Development
+- System Programming`,
     },
     kotlin: {
         name: 'Kotlin',
@@ -185,19 +185,19 @@ Applications:
 `Proficiency Level: Advanced
 
 Key Competencies:
-• Kotlin Coroutines
-• Extension Functions
-• Null Safety Features
-• Higher-Order Functions
-• Data Classes & Sealed Classes
-• Flow & Channel APIs
-• Android KTX
+- Kotlin Coroutines
+- Extension Functions
+- Null Safety Features
+- Higher-Order Functions
+- Data Classes & Sealed Classes
+- Flow & Channel APIs
+- Android KTX
 
 Applications:
-• Modern Android Development
-• Multiplatform Projects
-• DSL Creation
-• Server-side Development`,
+- Modern Android Development
+- Multiplatform Projects
+- DSL Creation
+- Server-side Development`,
     },
     dart: {
         name: 'Dart',
@@ -205,19 +205,19 @@ Applications:
 `Proficiency Level: Advanced
 
 Key Competencies:
-• Asynchronous Programming
-• Stream Processing
-• Object-Oriented Features
-• Generics & Collections
-• Isolates for Concurrency
-• Package Development
-• FFI Integration
+- Asynchronous Programming
+- Stream Processing
+- Object-Oriented Features
+- Generics & Collections
+- Isolates for Concurrency
+- Package Development
+- FFI Integration
 
 Applications:
-• Flutter Development
-• Command-line Tools
-• Web Applications
-• Package Creation`,
+- Flutter Development
+- Command-line Tools
+- Web Applications
+- Package Creation`,
     },
 };
 
