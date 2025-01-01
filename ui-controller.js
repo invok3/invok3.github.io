@@ -75,13 +75,22 @@ window.addEventListener('scroll', () => {
 updateActiveLink(0);
 
 // Console animation
+let isTyping = false;  // Add flag to prevent multiple typing instances
+
 async function typeText(element, text, speed = 50) {
+    if (isTyping) return;  // Prevent multiple typing instances
+    isTyping = true;
+    
+    element.textContent = '';  // Clear existing text
     element.classList.add('cursor');
+    
     for (let char of text) {
         element.textContent += char;
         await new Promise(resolve => setTimeout(resolve, speed));
     }
+    
     element.classList.remove('cursor');
+    isTyping = false;
 }
 
 async function animateConsole() {
@@ -89,23 +98,35 @@ async function animateConsole() {
     
     for (let i = 0; i < lines.length; i++) {
         const line = lines[i];
-        if (i === 0) {
-            line.style.opacity = 1;
-        }
-        line.style.opacity = 1;
         const prompt = line.querySelector('.console-prompt');
         const output = line.querySelector('.console-output');
+        
+        // Set initial opacity
+        line.style.opacity = 1;
         
         if (i === lines.length - 1) {
             // For the last line, just show the cursor
             output.classList.add('cursor');
         } else if (prompt && output) {
             // If it's a command line
-            await new Promise(resolve => setTimeout(resolve, 1000)); // 1 second before showing prompt
-            await typeText(output, output.getAttribute('data-text') || '');
-        } else if (output) {
-            // If it's output only
-            output.style.opacity = 1;
+            await new Promise(resolve => setTimeout(resolve, 1000)); // Wait before starting
+            
+            // Type the command
+            const commandText = output.getAttribute('data-text') || '';
+            await typeText(output, commandText);
+            
+            // Wait before showing response
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
+            // If next line is output, show it
+            if (i + 1 < lines.length) {
+                const nextLine = lines[i + 1];
+                const nextOutput = nextLine.querySelector('.console-output');
+                if (nextOutput && !nextLine.querySelector('.console-prompt')) {
+                    nextLine.style.opacity = 1;
+                    await new Promise(resolve => setTimeout(resolve, 100)); // Wait before next command
+                }
+            }
         }
     }
 }
@@ -221,46 +242,36 @@ Applications:
     },
 };
 
-function initializeSkillTerminal() {
-    const skillItems = document.querySelectorAll('.skill-item');
+let currentSkillTyping = false;  // Add flag for skill terminal
+
+async function executeSkillCommand(skillId) {
+    if (currentSkillTyping) return;  // Prevent multiple executions
+    currentSkillTyping = true;
+    
     const terminal = document.querySelector('.skill-terminal');
     const output = terminal.querySelector('.skill-output');
     const currentCommand = terminal.querySelector('.current-command');
-    let isTyping = false;
+    const skill = skillData[skillId];
+    const command = `skill info ${skill.name}`;
+    
+    // Type the command
+    await typeText(currentCommand, command, 10);
+    
+    // Clear previous output
+    output.textContent = '';
+    
+    // Add small delay before showing output
+    await new Promise(resolve => setTimeout(resolve, 500));
+    
+    // Type the skill description
+    await typeText(output, skill.description, 5);
+    
+    currentSkillTyping = false;
+}
 
-    async function typeText(text, element, speed = 10) {
-        let index = 0;
-        element.textContent = '';
-        
-        while (index < text.length) {
-            element.textContent += text.charAt(index);
-            index++;
-            await new Promise(resolve => setTimeout(resolve, speed));
-        }
-    }
-
-    async function executeSkillCommand(skillId) {
-        if (isTyping) return;
-        isTyping = true;
-
-        const skill = skillData[skillId];
-        const command = `skill info ${skill.name}`;
-        
-        // Type the command
-        await typeText(command, currentCommand);
-        
-        // Clear previous output
-        output.textContent = '';
-        
-        // Add small delay before showing output
-        await new Promise(resolve => setTimeout(resolve, 500));
-        
-        // Type the skill description
-        await typeText(skill.description, output, 5);
-        
-        isTyping = false;
-    }
-
+function initializeSkillTerminal() {
+    const skillItems = document.querySelectorAll('.skill-item');
+    
     skillItems.forEach(item => {
         item.addEventListener('click', () => {
             const skillId = item.dataset.skill;
