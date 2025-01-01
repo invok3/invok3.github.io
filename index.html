@@ -2,51 +2,13 @@
 <html>
 <head>
     <title>My Portfolio</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-        }
-        header {
-            background-color: #019191;
-            color: white;
-            padding: 10px 0;
-            text-align: center;
-        }
-        nav {
-            margin: 10px 0;
-        }
-        nav a {
-            margin: 0 15px;
-            color: white;
-            text-decoration: none;
-        }
-        .container {
-            padding: 20px;
-        }
-        .section {
-            margin-bottom: 40px;
-        }
-        footer {
-            position: fixed;
-            bottom: 0;
-            font-size: small;
-            font-family: -webkit-pictograph;
-            font-weight: 900;
-            width: -webkit-fill-available;
-            color: #019191;
-            text-align: center;
-            background-color: #f1f1f1;
-            padding: 10px 0;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
+<div id="threejs-container"></div>
+
 <header>
-    <h1>My Portfolio</h1>
     <nav>
         <a href="#about">About</a>
         <a href="#projects">Projects</a>
@@ -57,28 +19,111 @@
 
 <div class="container">
     <section id="about" class="section">
-        <h2>About Me</h2>
-        <p>Welcome to my portfolio! I am a passionate developer with skills in HTML, CSS, and more.</p>
+        <div class="console-container">
+            <div class="console-header">
+                <div class="console-buttons">
+                    <div class="console-button close"></div>
+                    <div class="console-button minimize"></div>
+                    <div class="console-button maximize"></div>
+                </div>
+                <span class="console-title">invok3@portfolio: ~/</span>
+            </div>
+            <div class="console-content">
+              <div class="console-line" style="opacity: 1;">
+                <span class="console-prompt">invok3@portfolio:~/$</span>
+                <span class="console-output" data-text=" whoami"></span>
+            </div>
+                <div class="console-line" data-delay="1000">
+                    <span class="console-output">Full Stack Developer</span>
+                </div>
+                <div class="console-line" data-delay="3000">
+                    <span class="console-prompt">invok3@portfolio:~/$</span>
+                    <span class="console-output" data-text=" cat description.txt"></span>
+                </div>
+                <div class="console-line" data-delay="5000">
+                    <span class="console-output">Transforming coffee into code, one challenge at a time.</span>
+                </div>
+                <div class="console-line" data-delay="0">
+                  <span class="console-prompt">invok3@portfolio:~/$</span>
+                  <span class="console-output cursor"></span>
+              </div>
+            </div>
+        </div>
     </section>
 
     <section id="projects" class="section">
-        <h2>Projects</h2>
-        <p>Here are some of my projects:</p>
-        <ul>
-            <li>Project 1</li>
-            <li>Project 2</li>
-            <li>Project 3</li>
-        </ul>
+        <div class="projects-grid">
+            <div class="project-card">
+                <h3 class="project-title">PhantomDroid</h3>
+                <p>A remote access tool for Android devices with file management, screen mirroring, and remote control capabilities.</p>
+                <div class="project-tech">
+                    <span class="tech-tag">Java</span>
+                    <span class="tech-tag">Android SDK</span>
+                    <span class="tech-tag">WebRTC</span>
+                    <span class="tech-tag">Socket.IO</span>
+                </div>
+                <div class="project-links">
+                    <a href="#contact" class="project-link">→ Request Demo</a>
+                    <a href="#contact" class="project-link">→ Request Access</a>
+                </div>
+            </div>
+            
+            <div class="project-card">
+                <h3 class="project-title">Flutter Runner</h3>
+                <p>A 2D endless runner game built from scratch using pure Dart and Flutter, with no external packages. Features procedurally generated obstacles, custom physics, and high score tracking.</p>
+                <div class="project-tech">
+                    <span class="tech-tag">Flutter</span>
+                    <span class="tech-tag">Dart</span>
+                    <span class="tech-tag">Custom Physics</span>
+                </div>
+                <div class="project-links">
+                    <a href="https://invok3.github.io/flutter_game_demo/" class="project-link">→ Live Demo</a>
+                    <a href="#contact" class="project-link">→ Source Code</a>
+                </div>
+            </div>
+            <div class="project-card">
+                <h3 class="project-title">More on GitHub</h3>
+                <p>Explore my GitHub repositories for additional projects including Flutter plugins, Unity/Three.js shaders, practice projects, and other experimental work. My repositories showcase my learning journey and technical exploration across different domains.</p>
+                <div class="project-tech">
+                    <span class="tech-tag">Flutter Plugins</span>
+                    <span class="tech-tag">Shaders</span>
+                    <span class="tech-tag">Three.js</span>
+                    <span class="tech-tag">Unity</span>
+                </div>
+                <div class="project-links">
+                    <a href="https://github.com/invok3" class="project-link">→ Visit GitHub Profile</a>
+                </div>
+            </div>
+        </div>
     </section>
 
     <section id="skills" class="section">
-        <h2>Skills</h2>
-        <p>Here are some of my skills:</p>
-        <ul>
-            <li>HTML</li>
-            <li>CSS</li>
-            <li>JavaScript</li>
-        </ul>
+        <h2>Technical Arsenal</h2>
+        <div class="skills-container">
+            <div class="skills-grid">
+                <div class="skill-item" data-skill="android">
+                    <div class="skill-name">Android Dev</div>
+                </div>
+                <div class="skill-item" data-skill="flutter">
+                    <div class="skill-name">Flutter</div>
+                </div>
+                <div class="skill-item" data-skill="java">
+                    <div class="skill-name">Java</div>
+                </div>
+                <div class="skill-item" data-skill="kotlin">
+                    <div class="skill-name">Kotlin</div>
+                </div>
+                <div class="skill-item" data-skill="dart">
+                    <div class="skill-name">Dart</div>
+                </div>
+                <!-- Add more skills -->
+            </div>
+            
+            <div class="skill-terminal">
+                <div class="terminal-prompt">invok3@portfolio:~/skills$ <span class="current-command"></span></div>
+                <div class="skill-output"></div>
+            </div>
+        </div>
     </section>
 
     <section id="contact" class="section">
@@ -87,9 +132,9 @@
     </section>
 </div>
 
-<footer>
-    <center>By InVoK3</center>
-</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="three-scene.js"></script>
+<script src="ui-controller.js"></script>
 
 </body>
 </html>

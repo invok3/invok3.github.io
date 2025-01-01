@@ -1,0 +1,389 @@
+:root {
+    --primary: #00ffff;     /* Aqua */
+    --secondary: #87ceeb;   /* Sky Blue */
+    --accent: #000080;      /* Navy Blue */
+    --glow: rgba(0, 255, 255, 0.3);
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    background-color: #1a1a2e; /* Dark cosmic background */
+    color: #eaeaea; /* Light text color for contrast */
+    user-select: none; /* Disable text selection */
+    scroll-snap-type: y mandatory; /* Enable vertical scroll snapping */
+    overflow-y: scroll;
+}
+
+#threejs-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Place behind other elements */
+}
+
+header {
+    background-color: black;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 100; /* Place above the canvas and content */
+}
+
+nav {
+    margin: 10px 0;
+}
+
+nav a {
+    margin: 0 15px;
+    color: #eaeaea; /* Light text color for links */
+    text-decoration: none;
+    position: relative;
+    padding-bottom: 5px;
+}
+
+nav a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 50%;
+    background-color: #eaeaea;
+    transition: all 0.3s ease;
+}
+
+nav a.active::after {
+    width: 100%;
+    left: 0;
+}
+
+.container {
+    padding: 20px;
+    position: relative;
+    z-index: 1; /* Place above the canvas */
+}
+
+.section {
+    margin-bottom: 40px;
+    background-color: transparent; /* Fully transparent */
+    padding: 20px;
+    border-radius: 8px;
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); */
+    height: 100vh; /* Full viewport height */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding-top: 100px; /* Add some space from the top to account for the header */
+    padding-left: 10%; /* Add some space from the left edge */
+    scroll-snap-align: start; /* Snap to the start of each section */
+}
+
+/* Adjust specific elements that might need centering */
+.section img {
+    align-self: center;
+}
+
+.section button {
+    align-self: center;
+}
+
+/* Console window styles */
+.console-container {
+    background-color: #1e1e1e;
+    border-radius: 6px;
+    max-width: 600px;
+    box-shadow: 0 0 20px var(--glow);
+    overflow: hidden;
+}
+
+.console-header {
+    background-color: #323232;
+    padding: 8px 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.console-buttons {
+    display: flex;
+    gap: 6px;
+}
+
+.console-button {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.close { background-color: #ff5f56; }
+.minimize { background-color: #ffbd2e; }
+.maximize { background-color: var(--secondary); }
+
+.console-title {
+    color: #ababab;
+    font-size: 14px;
+    margin-left: 20px;
+}
+
+.console-content {
+    padding: 15px;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.console-line {
+    margin: 5px 0;
+    opacity: 0;
+}
+
+.console-prompt {
+    color: var(--primary);
+}
+
+.console-output {
+    color: #cccccc;
+}
+
+/* Animation styles */
+.cursor {
+    border-right: 2px solid var(--primary);
+    animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+    50% { border-color: transparent; }
+}
+
+.console-line.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    font-size: small;
+    font-family: -webkit-pictograph;
+    font-weight: 900;
+    width: 100%;
+    color: #eaeaea;
+    text-align: center;
+    background-color: rgba(22, 33, 62, 0.8); /* Semi-transparent */
+    padding: 10px 0;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5);
+    z-index: 1; /* Place above the canvas */
+}
+
+nav a.active {
+    font-weight: bold; /* Highlight active link */
+    text-decoration: underline;
+}
+
+/* Project cards styling */
+.projects-grid {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+/* Mobile view (horizontal scroll) */
+@media screen and (max-width: 767px) {
+    .projects-grid {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        gap: 1rem;
+        padding: 1rem;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none; /* Firefox */
+    }
+
+    .projects-grid::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Edge */
+    }
+
+    .project-card {
+        flex: 0 0 85%;
+        scroll-snap-align: start;
+        margin-right: 1rem;
+    }
+
+    .project-card:last-child {
+        margin-right: 0;
+    }
+}
+
+.project-card {
+    background: rgba(22, 33, 62, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 25px rgba(0, 255, 255, 0.2);
+}
+
+.project-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transform: translateX(-100%);
+    transition: 0.5s;
+}
+
+.project-card:hover::before {
+    transform: translateX(100%);
+}
+
+.project-title {
+    color: var(--primary);
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.project-tech {
+    display: flex;
+    gap: 0.5rem;
+    margin: 1rem 0;
+    flex-wrap: wrap;
+}
+
+.tech-tag {
+    background: rgba(0, 255, 255, 0.1);
+    padding: 0.2rem 0.6rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    color: var(--secondary);
+}
+
+.project-links {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.project-link {
+    color: var(--primary);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.project-link:hover {
+    color: var(--secondary);
+}
+
+/* Updated Skills section styling */
+.skills-container {
+    width: 100%;
+    max-width: 800px;
+    font-family: 'Courier New', monospace;
+}
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+}
+
+.skill-item {
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(0, 255, 255, 0.2);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.skill-item:hover {
+    background: rgba(0, 255, 255, 0.1);
+    border-color: var(--primary);
+    box-shadow: 0 0 15px var(--glow);
+}
+
+.skill-name {
+    color: var(--primary);
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.skill-terminal {
+    margin-top: 2rem;
+    background: rgba(0, 0, 0, 0.7);
+    border: 1px solid rgba(0, 255, 255, 0.3);
+    border-radius: 8px;
+    padding: 12px;
+    min-height: 200px;
+    position: relative;
+    max-height: 400px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary) rgba(0, 0, 0, 0.3);
+}
+
+/* Webkit scrollbar styling */
+.skill-terminal::-webkit-scrollbar {
+    width: 8px;
+}
+
+.skill-terminal::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+}
+
+.skill-terminal::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 4px;
+    opacity: 0.7;
+}
+
+.skill-terminal::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary);
+}
+
+.skill-output {
+    color: #eaeaea;
+    white-space: pre-wrap;
+    line-height: 1.4;
+    font-size: 0.85rem;
+    padding-left: 1rem;
+}
+
+.terminal-prompt {
+    color: var(--primary);
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+}
+
+.typing-cursor {
+    display: inline-block;
+    width: 8px;
+    height: 15px;
+    background: var(--primary);
+    margin-left: 5px;
+    animation: blink 1s step-end infinite;
+}
+
+/* Add this to ui-controller.js */
