@@ -42,10 +42,15 @@ nav {
 
 nav a {
     margin: 0 15px;
-    color: #eaeaea; /* Light text color for links */
+    color: #eaeaea;
     text-decoration: none;
     position: relative;
     padding-bottom: 5px;
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color: var(--primary);
 }
 
 nav a::after {
@@ -55,13 +60,27 @@ nav a::after {
     height: 2px;
     bottom: 0;
     left: 50%;
-    background-color: #eaeaea;
-    transition: all 0.3s ease;
+    background-color: var(--primary);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: center;
+}
+
+nav a:hover::after {
+    width: 100%;
+    left: 0;
+}
+
+nav a.active {
+    color: var(--primary);
+    font-weight: 500;
+    text-shadow: 0 0 10px var(--glow);
 }
 
 nav a.active::after {
     width: 100%;
+    background-color: var(--primary);
     left: 0;
+    box-shadow: 0 0 10px var(--glow);
 }
 
 .container {
@@ -72,16 +91,35 @@ nav a.active::after {
 
 .section {
     margin-bottom: 40px;
-    background-color: transparent; /* Fully transparent */
+    background-color: transparent;
     border-radius: 8px;
-    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); */
-    height: 100vh; /* Full viewport height */
+    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
     padding: 10%;
-    scroll-snap-align: start; /* Snap to the start of each section */
+    scroll-snap-align: start;
+    opacity: 0;
+    animation: fadeIn 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    transition: transform 0.3s ease;
+}
+
+.section:hover {
+    transform: scale(1.01);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+        filter: blur(5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+    }
 }
 
 /* Adjust specific elements that might need centering */
@@ -490,4 +528,35 @@ nav a.active {
         grid-template-columns: 1fr;
         width: 90%;              /* Use percentage width on mobile */
     }
+}
+
+/* Add a subtle gradient overlay to the background */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, transparent 0%, rgba(26, 26, 46, 0.8) 100%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Enhance scrollbar styling */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary);
 }
