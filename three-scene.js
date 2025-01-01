@@ -71,43 +71,51 @@ function initNetwork() {
         scene.add(node);
     }
     
+    // Initialize connection count map
+    const connectionCounts = new Map(nodes.map(node => [node, 0]));
+    
     // Create random connections
-    nodes.forEach(node => {
-        // Random number of connections (1 to 3)
-        const numConnections = 1 + Math.floor(Math.random() * MAX_CONNECTIONS);
+    // Shuffle nodes array copy for random distribution
+    const shuffledNodes = [...nodes];
+    for(let i = shuffledNodes.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffledNodes[i], shuffledNodes[j]] = [shuffledNodes[j], shuffledNodes[i]];
+    }
+    
+    shuffledNodes.forEach(node => {
+        // Skip if node already has max connections
+        if (connectionCounts.get(node) >= MAX_CONNECTIONS) return;
         
-        // Get random nodes to connect to
-        const otherNodes = nodes.filter(n => 
+        // Get available nodes
+        const availableNodes = shuffledNodes.filter(n => 
             n !== node && 
-            // Check if this node already has max connections
-            connections.filter(c => 
-                (c.node1 === n || c.node2 === n)
-            ).length < MAX_CONNECTIONS
+            connectionCounts.get(n) < MAX_CONNECTIONS &&
+            !connections.some(c => 
+                (c.node1 === node && c.node2 === n) ||
+                (c.node1 === n && c.node2 === node)
+            )
         );
         
-        // Shuffle array for random selection
-        for(let i = otherNodes.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [otherNodes[i], otherNodes[j]] = [otherNodes[j], otherNodes[i]];
-        }
+        // Create random number of connections (1 to remaining available)
+        const remainingConnections = MAX_CONNECTIONS - connectionCounts.get(node);
+        const possibleConnections = Math.min(remainingConnections, availableNodes.length);
+        const numConnections = Math.max(1, Math.floor(Math.random() * possibleConnections));
         
         // Create connections
-        for(let i = 0; i < Math.min(numConnections, otherNodes.length); i++) {
-            // Check if connection already exists
-            const exists = connections.some(conn => 
-                (conn.node1 === node && conn.node2 === otherNodes[i]) ||
-                (conn.node1 === otherNodes[i] && conn.node2 === node)
-            );
+        for(let i = 0; i < numConnections && i < availableNodes.length; i++) {
+            const targetNode = availableNodes[i];
+            const connection = createConnection(node, targetNode);
             
-            if (!exists) {
-                const connection = createConnection(node, otherNodes[i]);
-                connections.push({
-                    line: connection,
-                    node1: node,
-                    node2: otherNodes[i]
-                });
-                scene.add(connection);
-            }
+            connections.push({
+                line: connection,
+                node1: node,
+                node2: targetNode
+            });
+            scene.add(connection);
+            
+            // Update connection counts
+            connectionCounts.set(node, connectionCounts.get(node) + 1);
+            connectionCounts.set(targetNode, connectionCounts.get(targetNode) + 1);
         }
     });
 }
