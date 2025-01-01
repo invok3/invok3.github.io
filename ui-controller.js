@@ -323,4 +323,52 @@ function initializeSkillTerminal() {
 // Initialize skill terminal when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     initializeSkillTerminal();
+});
+
+// Contact section animation
+function initializeContactTerminal() {
+    const command = document.querySelector('.contact-line .command');
+    const methods = document.querySelectorAll('.contact-method');
+    
+    async function animateTerminal() {
+        // Type the command
+        await typeText(command, command.dataset.text);
+        
+        // Show contact methods one by one
+        for (let method of methods) {
+            method.style.opacity = '0';
+            method.style.transform = 'translateX(-20px)';
+            await new Promise(resolve => setTimeout(resolve, 100));
+            method.style.opacity = '1';
+            method.style.transform = 'translateX(0)';
+        }
+    }
+
+    // Start animation when section becomes visible
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateTerminal();
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    observer.observe(document.querySelector('#contact'));
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    initializeContactTerminal();
+});
+
+// Add interactive glow effect
+document.querySelectorAll('.contact-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / card.clientWidth) * 100;
+        const y = ((e.clientY - rect.top) / card.clientHeight) * 100;
+        
+        card.style.setProperty('--mouse-x', `${x}%`);
+        card.style.setProperty('--mouse-y', `${y}%`);
+    });
 }); 

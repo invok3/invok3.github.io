@@ -73,7 +73,6 @@ nav a.active::after {
 .section {
     margin-bottom: 40px;
     background-color: transparent; /* Fully transparent */
-    padding: 20px;
     border-radius: 8px;
     /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); */
     height: 100vh; /* Full viewport height */
@@ -81,8 +80,7 @@ nav a.active::after {
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    padding-top: 100px; /* Add some space from the top to account for the header */
-    padding-left: 10%; /* Add some space from the left edge */
+    padding: 10%;
     scroll-snap-align: start; /* Snap to the start of each section */
 }
 
@@ -386,4 +384,110 @@ nav a.active {
     animation: blink 1s step-end infinite;
 }
 
-/* Add this to ui-controller.js */
+/* Modern Contact Section */
+.contact-container {
+    width: 100%;
+    margin-left: auto;
+    margin-bottom: 20vh;  /* Add some bottom spacing */
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    max-width: 800px;    /* Limit the maximum width */
+    margin: 0 auto;      /* Center horizontally */
+}
+
+.contact-card {
+    position: relative;
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(0, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 2rem;
+    overflow: hidden;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.card-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.contact-card i {
+    font-size: 2.5rem;
+    color: var(--primary);
+    transition: transform 0.3s ease;
+}
+
+.contact-label {
+    color: var(--secondary);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.contact-value {
+    color: #eaeaea;
+    font-size: .85rem;
+}
+
+.card-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+        circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(0, 255, 255, 0.15),
+        transparent 50%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+/* Hover Effects */
+.contact-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary);
+}
+
+.contact-card:hover .card-glow {
+    opacity: 1;
+}
+
+.contact-card:hover i {
+    transform: scale(1.1);
+}
+
+/* Card-specific colors */
+.contact-card.github:hover {
+    border-color: #6e5494;
+}
+
+.contact-card.email:hover {
+    border-color: #00ffff;
+}
+
+.contact-card.linkedin:hover {
+    border-color: #0077b5;
+}
+
+#contact.section {
+    justify-content: flex-end;   /* Push content to bottom */
+    align-items: center;         /* Center horizontally */
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+    .contact-grid {
+        grid-template-columns: 1fr;
+        width: 90%;              /* Use percentage width on mobile */
+    }
+}
